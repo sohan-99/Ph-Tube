@@ -1,37 +1,38 @@
 const displayvideos = videos => {
     // step --- 1
+    console.log(videos.data);
+    notFound(videos)
+    // console.log(videos);
     const videoContainer = document.getElementById('videos-container');
-    videoContainer.innerHTML='';
+    videoContainer.innerHTML = '';
 
-    videos.forEach(video => {
-        console.log(video);
+    videos.data.forEach(video => {
+        // console.log(video);
         // step-2 create a div 
         const videoCard = document.createElement('div');
         videoCard.classList = `card w-83 bg-black-400 shadow-xl`;
         // step-3 inner html 
         videoCard.innerHTML = `
         <figure><img class="h-[250px]" src="${video.thumbnail}" alt="Shoes" /></figure>
-        <div class="card-body">
-        <div class="grid grid-cols-2">
-        <img class="h-11 w-11 rounded-full " src="${video.authors[0].profile_picture}" alt="Shoes" />
-            <h2 class="card-title">${video.title}</h2>
+        <div class="flex justify-space-around space-x-11 px-4 pt-4 pb-4">
+        <img class="h-11 w-11 rounded-full  " src="${video.authors[0].profile_picture}">
+        <div class="">
+        <h2 class="card-title font-bold text-3xl">${video.title}</h2>
+        <h2 class="card-title2 font-normal text-slate-700 text-2xl">${video.authors[0].profile_name}</h2>
+        <h2 class="">${video.authors[0].verified}
+        <h2 class="card-title2 text-slate-700 font-normal text-xl">${video.others.views}</h2>
         </div>
-        <h2 class="card-title2">${video.others.views}</h2>
-        <img src="" alt="" />
-            <p>If a dog chews shoes whose shoes does he choose?</p>
-            
-        </div>`;
+        </div>
+        `;
         videoContainer.appendChild(videoCard);
     });
 };
 
-const handleChatagory  = async (id) => {
+const handleChatagory = async (id) => {
     console.log(id);
     const res = await fetch(`https://openapi.programming-hero.com/api/videos/category/${id}`);
     const data = await res.json();
-    const videos = data.data;
-    
-    displayvideos(videos);
+    displayvideos(data);
 };
 
 handleChatagory('1000');
@@ -39,18 +40,15 @@ handleChatagory('1000');
 const displaybutton = button => {
     // step --- 1
     const menucontainer = document.getElementById('menu-container');
-    
     button.forEach(menu => {
+        // console.log(menu);
         let menuBar = document.createElement('div');
         menuBar.classList = `text-center  flex `;
         menuBar.innerHTML = `
-        <div onclick="handleChatagory(${menu.category_id})" class=" block  h-[35px] rounded w-[75px] text-lg font-semibold text-[#FFF]  bg-[#FF1F3D]">${menu.category}</div>
-        
+        <div onclick="handleChatagory(${menu.category_id})" class=" block  h-[35px] rounded w-[75px] text-lg font-semibold text-black  bg-gray-300">${menu.category}</div>
         `;
-
         menucontainer.appendChild(menuBar);
     });
-
 };
 const handlemenu = async () => {
     const res = await fetch("https://openapi.programming-hero.com/api/videos/categories");
@@ -61,6 +59,18 @@ const handlemenu = async () => {
 };
 handlemenu()
 
+const notFound = (data) => {
+    const notFoundcontainer = document.getElementById('notFound');
+    notFoundcontainer.innerHTML = ''
+    const notTrue = !data.status  ? `<div class="flex flex-col mt-44 items-center gap-4">
+    <img src="./images/Icon.png" alt="no img found"  class="center">
+    <h1 class="font-bold text-4xl text-center">Oops!! Sorry, There is no <br>
+     content here</h1>
+    </div>` : '';
+const div = document.createElement('div');
+div.innerHTML=`${notTrue}`
+    notFoundcontainer.appendChild(div);
+}
 
 
 
