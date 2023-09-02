@@ -45,7 +45,7 @@ const displaybutton = button => {
         let menuBar = document.createElement('div');
         menuBar.classList = `text-center  flex `;
         menuBar.innerHTML = `
-        <div onclick="handleChatagory(${menu.category_id})" class=" block  h-[35px] rounded w-[75px] text-lg font-semibold text-black  bg-gray-300">${menu.category}</div>
+        <div onclick="handleChatagory(${menu.category_id})" class=" lg:pt-3 pt-1 text-center block  h-[35px] lg:h-[55px] md:h[40px] rounded lg:w-[150px] w-14 md:w-16 lg:text-xl text-sm md:text-lg font-semibold text-black  bg-gray-100">${menu.category}</div>
         `;
         menucontainer.appendChild(menuBar);
     });
@@ -73,6 +73,13 @@ div.innerHTML=`${notTrue}`
 }
 
 
+// blog button click 
+document.getElementById('blog-btn').addEventListener('click', function () {
+    console.log('blog-btn clicked');
+    
+    window.location.href = 'modal.html';
+
+})
 
 
 
